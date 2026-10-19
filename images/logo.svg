@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="64" height="64" fill="none">
+  <defs>
+    <linearGradient id="inspireGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#8b5cf6" />
+    </linearGradient>
+  </defs>
+  <rect width="24" height="24" rx="6" fill="url(#inspireGrad)" />
+  <path d="M13 3L4 14h7l-2 7 9-11h-7l2-7z" fill="#ffffff" />
+</svg>

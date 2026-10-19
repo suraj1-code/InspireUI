@@ -1,0 +1,6 @@
+{
+  "name": "InspireUI – UI Inspiration & Code Library",
+  "description": "A developer productivity platform to discover modern UI components, visually customize designs with live code synchronization, and export clean HTML, CSS, and JavaScript.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

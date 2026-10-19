@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InspireUI – UI Inspiration & Code Library</title>
+  <meta name="description" content="Discover, generate and build responsive UI components. Real UI Generator with pure HTML, CSS and Vanilla JavaScript.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <div class="brand-badge-icon">⚡</div>
+        <div class="brand-name">Inspire<span>UI</span></div>
+        <span class="brand-sub-badge">UI Library</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link active">Explore UI</a></li>
+          <li><a href="dashboard.html" class="nav-link">Student Dashboard</a></li>
+          <li><a href="admin.html" class="nav-link admin-nav-link" style="display: none;">Admin Console</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- AI Mentor Button -->
+        <button id="btnOpenAIMentor" class="btn-ai-mentor" onclick="openAIMentorModal()" title="Ask AI Mentor for UI or code help">
+          <span class="ai-sparkle-dot"></span>
+          <span>✨ Ask AI</span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Theme">☀️</button>
+        
+        <!-- Favourites Badge -->
+        <a href="dashboard.html" class="fav-badge-btn" title="View Saved Favourites">
+          <span>❤️</span>
+          <span id="navFavCount" class="fav-counter-badge">0</span>
+        </a>
+
+        <!-- User Profile or Login Buttons -->
+        <div id="navUserArea" class="user-menu"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Section with Search & UI Generator -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-pill">
+          <span>⚡</span> Pure HTML, CSS & Vanilla JavaScript &bull; Academic Project
+        </div>
+        <h1 class="hero-title">
+          Discover, Inspect & Build <span class="gradient-text">Production UI</span>
+        </h1>
+        <p class="hero-subtitle">
+          Describe any UI you want to build. InspireUI generates the actual interactive UI design with complete HTML, CSS and JavaScript code.
+        </p>
+
+        <!-- UI Generator & Search Input Box -->
+        <div class="search-wrapper">
+          <div class="search-input-box">
+            <span class="search-icon">✨</span>
+            <input 
+              type="text" 
+              id="generatorPromptInput" 
+              class="search-input" 
+              placeholder="Describe the UI you want..."
+              onkeydown="if(event.key === 'Enter') handleMainGenerateUI()"
+              autocomplete="off"
+            >
+            <button id="btnMainGenerate" class="btn btn-primary btn-sm" onclick="handleMainGenerateUI()" style="margin-left: 8px; border-radius: 8px; white-space: nowrap;">
+              Generate UI
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Examples Chips -->
+        <div class="quick-tags">
+          <span style="font-weight: 600; color: var(--text-dim);">Examples:</span>
+          <button type="button" class="tag-btn" onclick="quickFillPrompt('login page')">login page</button>
+          <button type="button" class="tag-btn" onclick="quickFillPrompt('signup page')">signup page</button>
+          <button type="button" class="tag-btn" onclick="quickFillPrompt('dashboard')">dashboard</button>
+          <button type="button" class="tag-btn" onclick="quickFillPrompt('navbar')">navbar</button>
+          <button type="button" class="tag-btn" onclick="quickFillPrompt('portfolio page')">portfolio page</button>
+          <button type="button" class="tag-btn" onclick="quickFillPrompt('contact form')">contact form</button>
+          <button type="button" class="tag-btn" onclick="quickFillPrompt('product card')">product card</button>
+          <button type="button" class="tag-btn" onclick="quickFillPrompt('pricing page')">pricing page</button>
+          <button type="button" class="tag-btn" onclick="quickFillPrompt('sidebar')">sidebar</button>
+          <button type="button" class="tag-btn" onclick="quickFillPrompt('landing page')">landing page</button>
+          <button type="button" class="tag-btn" onclick="quickFillPrompt('blog page')">blog page</button>
+          <button type="button" class="tag-btn" onclick="quickFillPrompt('table')">table</button>
+        </div>
+
+        <!-- Generation Loading State -->
+        <div id="mainGenLoading" class="generator-loading-box" style="display: none; justify-content: center; margin: 18px auto 0;">
+          <div class="ai-spinner"></div>
+          <div>
+            <strong>Generating UI...</strong>
+            <span style="font-size: 12px; color: var(--text-muted); display: block;">Synthesizing semantic HTML, clean CSS styling, and interactive JavaScript</span>
+          </div>
+        </div>
+
+        <!-- Hero Stats Row -->
+        <div class="hero-stats-row">
+          <div class="hero-stat-card">
+            <span class="hero-stat-number">15+</span>
+            <span class="hero-stat-label">Core UI Primitives</span>
+          </div>
+          <div class="hero-stat-card">
+            <span class="hero-stat-number">100%</span>
+            <span class="hero-stat-label">Zero Dependencies</span>
+          </div>
+          <div class="hero-stat-card">
+            <span class="hero-stat-number">Instant</span>
+            <span class="hero-stat-label">Live Code Sandbox</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories & Controls Bar -->
+    <section class="container controls-bar">
+      <div class="categories-container" id="categoryPills">
+        <button class="category-pill active" data-category="All" onclick="setCategory('All')">All</button>
+        <button class="category-pill" data-category="Login" onclick="setCategory('Login')">Login & Auth</button>
+        <button class="category-pill" data-category="Dashboard" onclick="setCategory('Dashboard')">Dashboard</button>
+        <button class="category-pill" data-category="Forms" onclick="setCategory('Forms')">Forms</button>
+        <button class="category-pill" data-category="Navbar" onclick="setCategory('Navbar')">Navbar</button>
+        <button class="category-pill" data-category="Pricing" onclick="setCategory('Pricing')">Pricing</button>
+        <button class="category-pill" data-category="Portfolio" onclick="setCategory('Portfolio')">Portfolio</button>
+        <button class="category-pill" data-category="E-commerce" onclick="setCategory('E-commerce')">E-commerce</button>
+        <button class="category-pill" data-category="Tables" onclick="setCategory('Tables')">Tables</button>
+      </div>
+
+      <div class="filter-row">
+        <div id="resultsCount" class="results-count">
+          Showing <span>15</span> components
+        </div>
+        <div class="sort-select-wrapper">
+          <label for="sortSelect" class="sort-label">Sort by:</label>
+          <select id="sortSelect" class="sort-select" onchange="handleSortChange(event)">
+            <option value="popular">Most Popular (Favorites)</option>
+            <option value="downloads">Highest Downloads</option>
+            <option value="newest">Newest First</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Inspiration Cards Grid -->
+    <section class="container" style="padding-bottom: 60px;">
+      <div class="cards-grid" id="cardsGrid">
+        <!-- Rendered dynamically by renderComponentCards() -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Code Preview Modal (Opens on View Code or on UI Generation) -->
+  <div id="codeModal" class="modal-backdrop">
+    <div class="code-modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <h3 id="modalTitle" class="modal-title">Component Name</h3>
+          <span id="modalCategory" class="modal-category-pill">Category</span>
+        </div>
+        <button class="modal-close-btn" onclick="closeCodeModal()">&times;</button>
+      </div>
+
+      <div class="modal-nav-bar">
+        <div class="modal-tabs">
+          <button class="modal-tab-btn active" data-tab="preview" onclick="switchModalTab('preview')">👁️ Live Preview</button>
+          <button class="modal-tab-btn" data-tab="html" onclick="switchModalTab('html')">📄 HTML</button>
+          <button class="modal-tab-btn" data-tab="css" onclick="switchModalTab('css')">🎨 CSS</button>
+          <button class="modal-tab-btn" data-tab="js" onclick="switchModalTab('js')">⚡ JavaScript</button>
+        </div>
+
+        <div class="modal-actions">
+          <div class="device-toggles" id="deviceToggleGroup">
+            <button type="button" class="device-btn active" id="devBtnDesktop" onclick="setPreviewDevice('desktop')" title="Full Desktop View">🖥️ Full</button>
+            <button type="button" class="device-btn" id="devBtnTablet" onclick="setPreviewDevice('tablet')" title="Tablet View">💻 Tablet</button>
+            <button type="button" class="device-btn" id="devBtnMobile" onclick="setPreviewDevice('mobile')" title="Mobile View">📱 Mobile</button>
+          </div>
+          <button id="modalOpenTabBtn" class="btn btn-secondary btn-sm" onclick="openComponentInNewTab()" title="Open component in full browser tab">
+            ↗️ Full Window
+          </button>
+          <button id="modalCopyBtn" class="btn btn-secondary btn-sm" onclick="copyCurrentCode()">📋 Copy Code</button>
+          <button class="btn btn-primary btn-sm" onclick="downloadCurrentComponent()">📥 Download Code</button>
+        </div>
+      </div>
+
+      <div class="modal-content-area">
+        <div id="pane-preview" class="modal-tab-pane active">
+          <iframe id="modalSandboxIframe" class="sandbox-iframe-full" title="Sandbox Preview"></iframe>
+        </div>
+        <div id="pane-html" class="modal-tab-pane">
+          <pre id="codeHtmlPre" class="code-pre-box"></pre>
+        </div>
+        <div id="pane-css" class="modal-tab-pane">
+          <pre id="codeCssPre" class="code-pre-box"></pre>
+        </div>
+        <div id="pane-js" class="modal-tab-pane">
+          <pre id="codeJsPre" class="code-pre-box"></pre>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <span class="modal-info-text">💡 Pure HTML, CSS & JavaScript code preview. Beginner-friendly and zero dependencies.</span>
+        <button class="btn btn-secondary btn-sm" onclick="closeCodeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Action Button for Students -->
+  <button class="ai-fab-btn" onclick="openAIMentorModal()" title="Ask AI to design UI & explain code">
+    <span>✨</span> Ask AI Mentor
+  </button>
+
+  <!-- AI Mentor & UI Specialist Modal (ChatGPT / Gemini Style) -->
+  <div id="aiMentorModal" class="modal-backdrop">
+    <div class="ai-mentor-dialog">
+      <div class="ai-dialog-topbar">
+        <div class="ai-brand-group">
+          <div class="ai-avatar-badge">✨</div>
+          <div class="ai-header-titles">
+            <h3>InspireUI AI Mentor <span class="ai-chip-tag">Gemini Powered</span></h3>
+            <p>Ask any web development question or request real UI generation with code & viva explanation</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeAIMentorModal()">&times;</button>
+      </div>
+
+      <!-- Chat History -->
+      <div class="ai-chat-body" id="aiChatBody">
+        <div class="ai-chat-empty-state" id="aiChatEmptyNotice" style="text-align: center; margin: auto; padding: 40px 20px; color: #64748b;">
+          <div style="font-size: 36px; margin-bottom: 12px;">✨</div>
+          <h4 style="color: #94a3b8; font-size: 16px; margin-bottom: 6px;">Ask InspireUI AI Mentor</h4>
+          <p style="font-size: 13px; max-width: 480px; margin: 0 auto; line-height: 1.5; color: #64748b;">Type any web UI question or component request below, or click any quick topic above to generate working code and live preview!</p>
+        </div>
+      </div>
+
+      <!-- Quick Suggestion Prompts -->
+      <div class="ai-chat-suggestions">
+        <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Quick Ask:</span>
+        <button type="button" class="suggestion-chip" onclick="quickAskAI('Generate an interactive Quiz App card with score counter')">📱 Quiz App Card</button>
+        <button type="button" class="suggestion-chip" onclick="quickAskAI('Explain how login form JavaScript validation works for my viva')">🎓 Login Validation Viva Help</button>
+        <button type="button" class="suggestion-chip" onclick="quickAskAI('Generate modern OTP Verification Screen with auto-focus inputs')">🔐 OTP Verification Screen</button>
+        <button type="button" class="suggestion-chip" onclick="quickAskAI('Build an interactive Student Grade Calculator card')">📊 Grade Calculator Card</button>
+        <button type="button" class="suggestion-chip" onclick="quickAskAI('Generate Glassmorphism Music Player with play/pause toggle')">🎵 Music Player UI</button>
+        <button type="button" class="suggestion-chip" onclick="quickAskAI('Create an E-commerce Product Card with quantity selector')">🛍️ Product Card</button>
+      </div>
+
+      <!-- Chat Input Bar -->
+      <div class="ai-chat-input-bar">
+        <input 
+          type="text" 
+          id="aiChatInput" 
+          class="ai-chat-input-box" 
+          placeholder="Ask anything about UI or describe what to generate (e.g. 'Generate a Quiz App card')..."
+          onkeydown="if(event.key === 'Enter') handleSendAIChat()"
+          autocomplete="off"
+        >
+        <button type="button" id="btnSendAIChat" class="ai-send-btn" onclick="handleSendAIChat()">
+          <span>Send</span> ➔
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-copy">
+          &copy; 2026 <strong>InspireUI</strong> &bull; Third Year IT Academic Project. UI Inspiration & Real Code Library built with pure HTML, CSS, and Vanilla JavaScript.
+        </div>
+        <ul class="footer-links">
+          <li><a href="index.html">Explore UI</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="login.html">Sign In</a></li>
+          <li><a href="register.html">Register</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      loadComponents();
+    });
+  </script>
+</body>
+</html>

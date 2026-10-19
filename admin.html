@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Console – InspireUI</title>
+  <meta name="description" content="Manage UI components, user accounts, and platform metrics for InspireUI.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <div class="brand-badge-icon">⚡</div>
+        <div class="brand-name">Inspire<span>UI</span></div>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Explore</a></li>
+          <li><a href="dashboard.html" class="nav-link">Student Dashboard</a></li>
+          <li><a href="admin.html" class="nav-link admin-nav-link active">Admin Console</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Theme">☀️</button>
+        <div id="navUserArea" class="user-menu"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Admin Main -->
+  <main class="container" style="padding-top: 30px;">
+    <div class="filter-row" style="margin-bottom: 10px;">
+      <div>
+        <h1 style="font-size: 26px; font-weight: 800;">Platform Administration Console</h1>
+        <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+          Manage curated UI component catalog, review user accounts, and audit platform data.
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 10px;">
+        <a href="index.html" class="btn btn-secondary btn-sm">👁️ View Public Library</a>
+      </div>
+    </div>
+
+    <!-- Admin KPI Cards -->
+    <div class="admin-metrics-row">
+      <div class="admin-metric-card">
+        <div class="admin-metric-label">Curated Components</div>
+        <div id="adminStatComponents" class="admin-metric-num">15</div>
+      </div>
+
+      <div class="admin-metric-card">
+        <div class="admin-metric-label">Registered Accounts</div>
+        <div id="adminStatUsers" class="admin-metric-num">2</div>
+      </div>
+
+      <div class="admin-metric-card">
+        <div class="admin-metric-label">Total Downloads</div>
+        <div class="admin-metric-num">12.4k</div>
+      </div>
+
+      <div class="admin-metric-card">
+        <div class="admin-metric-label">Client System Health</div>
+        <div class="admin-metric-num" style="color: var(--success); font-size: 24px;">99.9% Optimal</div>
+      </div>
+    </div>
+
+    <!-- Section 1: User Accounts Management (The section from the user's screenshot!) -->
+    <div class="table-container">
+      <div class="table-header-bar">
+        <div>
+          <h2 class="table-title">User Accounts & Roles</h2>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
+            Manage platform users. Delete unwanted test accounts with one click.
+          </p>
+        </div>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Role</th>
+            <th>Member Since</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="adminUsersTableBody">
+          <!-- Populated by js/script.js renderAdminUsers() -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section 2: Component Management -->
+    <div class="table-container">
+      <div class="table-header-bar">
+        <div>
+          <h2 class="table-title">UI Component Catalog</h2>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
+            Inspect or remove components from the live repository.
+          </p>
+        </div>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Component Name</th>
+            <th>Category</th>
+            <th>Author</th>
+            <th>Favourites</th>
+            <th>Downloads</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="adminComponentsTableBody">
+          <!-- Populated by js/script.js renderAdminComponents() -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Code Preview Modal -->
+  <div id="codeModal" class="modal-backdrop">
+    <div class="code-modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <h3 id="modalTitle" class="modal-title">Component Name</h3>
+          <span id="modalCategory" class="modal-category-pill">Category</span>
+        </div>
+        <button class="modal-close-btn" onclick="closeCodeModal()">&times;</button>
+      </div>
+
+      <div class="modal-nav-bar">
+        <div class="modal-tabs">
+          <button class="modal-tab-btn active" data-tab="preview" onclick="switchModalTab('preview')">👁️ Live Preview</button>
+          <button class="modal-tab-btn" data-tab="html" onclick="switchModalTab('html')">📄 HTML</button>
+          <button class="modal-tab-btn" data-tab="css" onclick="switchModalTab('css')">🎨 CSS</button>
+          <button class="modal-tab-btn" data-tab="js" onclick="switchModalTab('js')">⚡ JavaScript</button>
+        </div>
+
+        <div class="modal-actions">
+          <div class="device-toggles" id="deviceToggleGroup">
+            <button type="button" class="device-btn active" id="devBtnDesktop" onclick="setPreviewDevice('desktop')" title="Full Desktop View">🖥️ Full</button>
+            <button type="button" class="device-btn" id="devBtnTablet" onclick="setPreviewDevice('tablet')" title="Tablet View">💻 Tablet</button>
+            <button type="button" class="device-btn" id="devBtnMobile" onclick="setPreviewDevice('mobile')" title="Mobile View">📱 Mobile</button>
+          </div>
+          <button id="modalOpenTabBtn" class="btn btn-secondary btn-sm" onclick="openComponentInNewTab()" title="Open component in full browser tab">
+            ↗️ Full Window
+          </button>
+          <button id="modalCopyBtn" class="btn btn-secondary btn-sm" onclick="copyCurrentCode()">📋 Copy Code</button>
+          <button class="btn btn-primary btn-sm" onclick="downloadCurrentComponent()">📥 Download .html</button>
+        </div>
+      </div>
+
+      <div class="modal-content-area">
+        <div id="pane-preview" class="modal-tab-pane active">
+          <iframe id="modalSandboxIframe" class="sandbox-iframe-full" title="Sandbox Preview"></iframe>
+        </div>
+        <div id="pane-html" class="modal-tab-pane">
+          <pre id="codeHtmlPre" class="code-pre-box"></pre>
+        </div>
+        <div id="pane-css" class="modal-tab-pane">
+          <pre id="codeCssPre" class="code-pre-box"></pre>
+        </div>
+        <div id="pane-js" class="modal-tab-pane">
+          <pre id="codeJsPre" class="code-pre-box"></pre>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <span class="modal-info-text">💡 Pure HTML, CSS & JavaScript code preview.</span>
+        <button class="btn btn-secondary btn-sm" onclick="closeCodeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-copy">
+          &copy; 2026 <strong>InspireUI</strong> &bull; Third Year IT Academic Project.
+        </div>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="admin.html">Admin</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      initAdminConsole();
+    });
+  </script>
+</body>
+</html>

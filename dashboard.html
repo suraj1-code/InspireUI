@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard – InspireUI</title>
+  <meta name="description" content="View your saved components, organize developer projects, and manage your UI code library.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <div class="brand-badge-icon">⚡</div>
+        <div class="brand-name">Inspire<span>UI</span></div>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Explore</a></li>
+          <li><a href="dashboard.html" class="nav-link active">Student Dashboard</a></li>
+          <li><a href="admin.html" class="nav-link admin-nav-link" style="display: none;">Admin Console</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Ask AI Button -->
+        <button onclick="openAskAIModal()" class="btn ask-ai-btn btn-sm" title="Generate any UI with AI">
+          ✨ Ask AI to UI
+        </button>
+        <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Theme">☀️</button>
+        <div id="navUserArea" class="user-menu"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Dashboard Profile Header -->
+    <section class="dashboard-header">
+      <div class="profile-bar">
+        <div class="profile-info">
+          <div id="dashUserAvatar" class="profile-avatar-lg">S</div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <h1 id="dashUserName" class="profile-name">Suraj</h1>
+              <span id="dashUserRole" class="table-badge badge-admin">Admin</span>
+            </div>
+            <div id="dashUserEmail" class="profile-email">sc639489@gmail.com</div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+          <button onclick="openAskAIModal()" class="btn ask-ai-btn">
+            ✨ Ask AI to UI
+          </button>
+          <button onclick="openNewProjectModal()" class="btn btn-primary">
+            + New Project Sandbox
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Grid -->
+      <div class="dashboard-stats-grid">
+        <div class="stat-box">
+          <div class="stat-box-icon">❤️</div>
+          <div>
+            <div id="dashStatFavs" class="stat-box-num">2</div>
+            <div class="stat-box-title">Saved Components</div>
+          </div>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-box-icon">📁</div>
+          <div>
+            <div id="dashStatProjects" class="stat-box-num">2</div>
+            <div class="stat-box-title">Active Projects</div>
+          </div>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-box-icon">📥</div>
+          <div>
+            <div class="stat-box-num">14</div>
+            <div class="stat-box-title">Code Exports</div>
+          </div>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-box-icon">⚡</div>
+          <div>
+            <div class="stat-box-num">Zero</div>
+            <div class="stat-box-title">NPM Dependencies</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tabs Navigation -->
+    <div class="dashboard-tabs">
+      <button class="dash-tab-btn active" id="tabBtnFavs" onclick="showDashboardSection('favs')">
+        <span>❤️</span> My Favourites
+      </button>
+      <button class="dash-tab-btn" id="tabBtnProjects" onclick="showDashboardSection('projects')">
+        <span>📁</span> My Projects
+      </button>
+    </div>
+
+    <!-- Section 1: Saved Favourites Grid -->
+    <section id="sectionFavs">
+      <div class="filter-row" style="margin-bottom: 20px;">
+        <h2 style="font-size: 18px;">Saved Components Library</h2>
+        <a href="index.html" class="btn btn-secondary btn-sm">+ Browse More Components</a>
+      </div>
+      <div id="dashFavGrid" class="cards-grid">
+        <!-- Rendered dynamically by renderDashboardFavourites() -->
+      </div>
+    </section>
+
+    <!-- Section 2: Projects Grid -->
+    <section id="sectionProjects" style="display: none;">
+      <div class="filter-row" style="margin-bottom: 20px;">
+        <h2 style="font-size: 18px;">Custom Web Projects</h2>
+        <button onclick="openNewProjectModal()" class="btn btn-primary btn-sm">+ Create Project</button>
+      </div>
+      <div id="dashProjectsGrid" class="projects-grid">
+        <!-- Rendered dynamically by renderDashboardProjects() -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Create New Project Modal -->
+  <div id="projectModal" class="modal-backdrop">
+    <div class="code-modal-dialog" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Create New Project Sandbox</h3>
+        <button class="modal-close-btn" onclick="closeNewProjectModal()">&times;</button>
+      </div>
+      <form onsubmit="handleCreateProject(event)" style="padding: 24px;">
+        <div class="form-group">
+          <label for="projectNameInput" class="form-label">Project Name</label>
+          <input type="text" id="projectNameInput" class="form-input" placeholder="e.g. Portfolio Website" required>
+        </div>
+
+        <div class="form-group">
+          <label for="projectCatInput" class="form-label">Category</label>
+          <select id="projectCatInput" class="form-select">
+            <option value="Landing Page">Landing Page</option>
+            <option value="Dashboard">Dashboard</option>
+            <option value="E-commerce">E-commerce</option>
+            <option value="Portfolio">Portfolio</option>
+            <option value="Web Application">Web Application</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="projectDescInput" class="form-label">Description / Notes</label>
+          <textarea id="projectDescInput" class="form-textarea" rows="3" placeholder="Briefly describe what this project is for..."></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+          <button type="button" class="btn btn-secondary" onclick="closeNewProjectModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Code Preview Modal -->
+  <div id="codeModal" class="modal-backdrop">
+    <div class="code-modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <h3 id="modalTitle" class="modal-title">Component Name</h3>
+          <span id="modalCategory" class="modal-category-pill">Category</span>
+        </div>
+        <button class="modal-close-btn" onclick="closeCodeModal()">&times;</button>
+      </div>
+
+      <div class="modal-nav-bar">
+        <div class="modal-tabs">
+          <button class="modal-tab-btn active" data-tab="preview" onclick="switchModalTab('preview')">👁️ Live Preview</button>
+          <button class="modal-tab-btn" data-tab="html" onclick="switchModalTab('html')">📄 HTML</button>
+          <button class="modal-tab-btn" data-tab="css" onclick="switchModalTab('css')">🎨 CSS</button>
+          <button class="modal-tab-btn" data-tab="js" onclick="switchModalTab('js')">⚡ JavaScript</button>
+        </div>
+
+        <div class="modal-actions">
+          <div class="device-toggles" id="deviceToggleGroup">
+            <button type="button" class="device-btn active" id="devBtnDesktop" onclick="setPreviewDevice('desktop')" title="Full Desktop View">🖥️ Full</button>
+            <button type="button" class="device-btn" id="devBtnTablet" onclick="setPreviewDevice('tablet')" title="Tablet View">💻 Tablet</button>
+            <button type="button" class="device-btn" id="devBtnMobile" onclick="setPreviewDevice('mobile')" title="Mobile View">📱 Mobile</button>
+          </div>
+          <button id="modalOpenTabBtn" class="btn btn-secondary btn-sm" onclick="openComponentInNewTab()" title="Open component in full browser tab">
+            ↗️ Full Window
+          </button>
+          <button id="modalCopyBtn" class="btn btn-secondary btn-sm" onclick="copyCurrentCode()">📋 Copy Code</button>
+          <button class="btn btn-primary btn-sm" onclick="downloadCurrentComponent()">📥 Download .html</button>
+        </div>
+      </div>
+
+      <div class="modal-content-area">
+        <div id="pane-preview" class="modal-tab-pane active">
+          <iframe id="modalSandboxIframe" class="sandbox-iframe-full" title="Sandbox Preview"></iframe>
+        </div>
+        <div id="pane-html" class="modal-tab-pane">
+          <pre id="codeHtmlPre" class="code-pre-box"></pre>
+        </div>
+        <div id="pane-css" class="modal-tab-pane">
+          <pre id="codeCssPre" class="code-pre-box"></pre>
+        </div>
+        <div id="pane-js" class="modal-tab-pane">
+          <pre id="codeJsPre" class="code-pre-box"></pre>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <span class="modal-info-text">💡 Pure HTML, CSS & JavaScript code preview.</span>
+        <button class="btn btn-secondary btn-sm" onclick="closeCodeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ask AI to UI Modal -->
+  <div id="askAIModal" class="modal-backdrop">
+    <div class="code-modal-dialog ai-dialog">
+      <div class="ai-dialog-header">
+        <div class="ai-dialog-title">
+          <span>✨</span> Ask AI to Design Any UI
+        </div>
+        <button class="modal-close-btn" onclick="closeAskAIModal()" title="Close dialog">&times;</button>
+      </div>
+
+      <form onsubmit="handleGenerateUI(event)" style="padding: 24px;">
+        <div class="form-group">
+          <label for="aiPromptInput" class="form-label">What UI component or model do you want to design?</label>
+          <textarea 
+            id="aiPromptInput" 
+            class="form-textarea" 
+            rows="3" 
+            placeholder="e.g. Modern Crypto Wallet card with live balances and send/receive actions, or Animated Music Player with vinyl disc and timeline..."
+            required
+          ></textarea>
+        </div>
+
+        <!-- Quick Inspiration Chips -->
+        <div style="margin-bottom: 18px;">
+          <div style="font-size: 11px; text-transform: uppercase; font-weight: 700; color: #a78bfa; margin-bottom: 6px;">
+            Quick Prompt Starters:
+          </div>
+          <div class="ai-chips-list">
+            <button type="button" class="ai-chip" onclick="fillAIPrompt('Modern Crypto Wallet card with live balances, currency converter, and transaction history')">💰 Crypto Wallet</button>
+            <button type="button" class="ai-chip" onclick="fillAIPrompt('Glassmorphic ambient music player with vinyl spin, song timeline, and playback controls')">🎵 Music Player</button>
+            <button type="button" class="ai-chip" onclick="fillAIPrompt('Tiered SaaS Pricing Matrix with monthly/annual switch and highlight feature checklist')">💳 Pricing Matrix</button>
+            <button type="button" class="ai-chip" onclick="fillAIPrompt('Real-time Analytics KPI card with trend charts, growth percentage, and filter dropdown')">📊 Analytics KPI</button>
+            <button type="button" class="ai-chip" onclick="fillAIPrompt('Interactive Customer Review & Feedback form with 5-star rating, tags, and submit feedback')">⭐ Feedback Form</button>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px;">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="aiStyleSelect" class="form-label">Visual Design Style</label>
+            <select id="aiStyleSelect" class="form-select">
+              <option value="Modern Dark">Modern Dark</option>
+              <option value="Glassmorphic">Glassmorphic (Frosted Glass)</option>
+              <option value="Vibrant Gradient">Vibrant Neon Gradient</option>
+              <option value="Minimalist Clean">Minimalist Clean</option>
+              <option value="Neumorphic">Soft Neumorphic</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="aiCategorySelect" class="form-label">Component Category</label>
+            <select id="aiCategorySelect" class="form-select">
+              <option value="Cards">Cards</option>
+              <option value="Dashboard">Dashboard</option>
+              <option value="Forms">Forms</option>
+              <option value="Pricing">Pricing</option>
+              <option value="Login">Login & Auth</option>
+              <option value="Hero Section">Hero Section</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Animated Loading State -->
+        <div id="aiLoadingBox" class="ai-loading-box">
+          <div class="ai-spinner"></div>
+          <div style="font-weight: 700; color: #e2e8f0; font-size: 14px;">Generating UI with AI Engine...</div>
+          <div style="font-size: 12px; color: #94a3b8;">Crafting semantic HTML, clean CSS styling, and interactive JavaScript</div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px;">
+          <button type="button" class="btn btn-secondary" onclick="closeAskAIModal()">Cancel</button>
+          <button type="submit" id="aiSubmitBtn" class="btn ask-ai-btn">
+            ✨ Generate UI Component
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-copy">
+          &copy; 2026 <strong>InspireUI</strong> &bull; Third Year IT Academic Project.
+        </div>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="admin.html">Admin</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    function showDashboardSection(section) {
+      const btnFavs = document.getElementById("tabBtnFavs");
+      const btnProjects = document.getElementById("tabBtnProjects");
+      const secFavs = document.getElementById("sectionFavs");
+      const secProjects = document.getElementById("sectionProjects");
+
+      if (section === 'favs') {
+        btnFavs.classList.add("active");
+        btnProjects.classList.remove("active");
+        secFavs.style.display = "block";
+        secProjects.style.display = "none";
+      } else {
+        btnProjects.classList.add("active");
+        btnFavs.classList.remove("active");
+        secFavs.style.display = "none";
+        secProjects.style.display = "block";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      initDashboard();
+    });
+  </script>
+</body>
+</html>

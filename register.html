@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account – InspireUI Code Library</title>
+  <meta name="description" content="Join InspireUI to customize UI components, save inspirations, organize developer projects, and download clean code.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <div class="brand-badge-icon">⚡</div>
+        <div class="brand-name">Inspire<span>UI</span></div>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Explore</a></li>
+          <li><a href="dashboard.html" class="nav-link">Student Dashboard</a></li>
+          <li><a href="admin.html" class="nav-link admin-nav-link" style="display: none;">Admin Console</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Theme">☀️</button>
+        <a href="login.html" class="btn btn-secondary btn-sm">Sign In</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Register Main -->
+  <main class="auth-page-wrapper">
+    <div class="auth-split-card">
+      <!-- Promo Column -->
+      <div class="auth-promo-column">
+        <div>
+          <div class="hero-pill" style="margin-bottom: 16px;">
+            <span>🎓</span> Academic IT Project
+          </div>
+          <h2 class="auth-promo-title">Join InspireUI Today</h2>
+          <p class="auth-promo-desc">
+            Save time designing web apps with pre-built responsive components. Pure HTML, CSS, and JavaScript designed for easy understanding and customization.
+          </p>
+
+          <ul class="auth-features-list">
+            <li class="auth-feature-item">
+              <div class="auth-feature-icon">📁</div>
+              <span>Create unlimited component projects</span>
+            </li>
+            <li class="auth-feature-item">
+              <div class="auth-feature-icon">❤️</div>
+              <span>Bookmark favorite UI layouts</span>
+            </li>
+            <li class="auth-feature-item">
+              <div class="auth-feature-icon">👁️</div>
+              <span>Live interactive preview in any browser</span>
+            </li>
+            <li class="auth-feature-item">
+              <div class="auth-feature-icon">🔒</div>
+              <span>Local browser session persistence</span>
+            </li>
+          </ul>
+        </div>
+
+        <div style="font-size: 12px; color: #64748b; margin-top: 32px;">
+          Clean semantic markup &bull; Easy to modify manually for TY IT Viva
+        </div>
+      </div>
+
+      <!-- Form Column -->
+      <div class="auth-form-column">
+        <div class="auth-header">
+          <h2 class="auth-title">Create Free Account</h2>
+          <p class="auth-subtitle">Get started in seconds. No credit card or server setup required.</p>
+        </div>
+
+        <!-- Registration Form -->
+        <form onsubmit="handleRegisterSubmit(event)">
+          <div class="form-group">
+            <label for="regName" class="form-label">Full Name</label>
+            <input 
+              type="text" 
+              id="regName" 
+              class="form-input" 
+              placeholder="e.g. Alex Rivera" 
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="regEmail" class="form-label">Email Address</label>
+            <input 
+              type="email" 
+              id="regEmail" 
+              class="form-input" 
+              placeholder="alex@example.com" 
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="regRole" class="form-label">Account Role</label>
+            <select id="regRole" class="form-select">
+              <option value="Developer">Student / Frontend Developer</option>
+              <option value="Admin">Platform Administrator</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="regPassword" class="form-label">Create Password</label>
+            <input 
+              type="password" 
+              id="regPassword" 
+              class="form-input" 
+              placeholder="At least 6 characters" 
+              required
+            >
+          </div>
+
+          <div style="margin-bottom: 20px; font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 8px;">
+            <input type="checkbox" id="termsCheck" required checked>
+            <label for="termsCheck">I agree to the InspireUI developer terms & project guidelines</label>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%;">
+            Create Account & Get Started ➔
+          </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 24px; font-size: 13px; color: var(--text-dim);">
+          Already have an account? <a href="login.html" style="color: var(--accent-primary); font-weight: 600;">Sign in here</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-copy">
+          &copy; 2026 <strong>InspireUI</strong> &bull; Third Year IT Academic Project.
+        </div>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="login.html">Sign In</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

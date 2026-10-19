@@ -1,0 +1,19 @@
+{
+  "name": "inspireui",
+  "private": true,
+  "version": "2.0.0",
+  "description": "InspireUI – UI Inspiration & Code Library (Pure HTML, CSS, JavaScript)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 3000 --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --port 3000 --host 0.0.0.0",
+    "lint": "node -c js/script.js"
+  },
+  "devDependencies": {
+    "vite": "^8.3.0"
+  },
+  "dependencies": {
+    "@google/genai": "^2.27.0"
+  }
+}

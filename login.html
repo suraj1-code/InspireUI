@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login – InspireUI</title>
+  <meta name="description" content="Login to continue to your InspireUI account - UI Inspiration & Code Library.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-page-body">
+
+  <main class="login-wrapper">
+    <!-- Centered Login Card -->
+    <div class="login-card">
+
+      <!-- InspireUI Branding -->
+      <div class="login-brand">
+        <a href="index.html" class="login-brand-link">
+          <div class="brand-badge-icon">⚡</div>
+          <div class="brand-name">Inspire<span>UI</span></div>
+        </a>
+        <p class="login-tagline">UI Inspiration & Code Library</p>
+      </div>
+
+      <!-- Heading & Subtitle -->
+      <div class="login-header">
+        <h1 class="login-title">Welcome Back</h1>
+        <p class="login-subtitle">Login to continue to your InspireUI account.</p>
+      </div>
+
+      <!-- Validation Message Box (managed by js/script.js) -->
+      <div id="loginAlertBox" class="login-alert-box" style="display: none;"></div>
+
+      <!-- 1-Click Demo Profiles for TY IT Evaluation -->
+      <div class="login-demo-box">
+        <div class="login-demo-label"><span>⚡</span> 1-Click Demo Profiles:</div>
+        <div class="login-demo-actions">
+          <button type="button" class="login-demo-chip" onclick="fillDemoUser('admin')">
+            👨‍💼 Suraj (Admin)
+          </button>
+          <button type="button" class="login-demo-chip" onclick="fillDemoUser('dev')">
+            👩‍💻 Sarah (Dev)
+          </button>
+        </div>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" onsubmit="handleLoginSubmit(event)" novalidate>
+        <!-- Email Input -->
+        <div class="form-group">
+          <label for="loginEmail" class="form-label">Email Address</label>
+          <input 
+            type="email" 
+            id="loginEmail" 
+            class="form-input" 
+            placeholder="Enter your email"
+            autocomplete="email"
+          >
+        </div>
+
+        <!-- Password Input with Show/Hide Button -->
+        <div class="form-group">
+          <div class="password-label-row">
+            <label for="loginPassword" class="form-label">Password</label>
+            <a href="#" onclick="showForgotPasswordAlert(); return false;" class="forgot-link">Forgot Password?</a>
+          </div>
+          <div class="password-input-wrap">
+            <input 
+              type="password" 
+              id="loginPassword" 
+              class="form-input" 
+              placeholder="Enter your password"
+              autocomplete="current-password"
+            >
+            <button 
+              type="button" 
+              id="togglePasswordBtn" 
+              class="password-toggle-btn" 
+              onclick="togglePasswordVisibility()" 
+              title="Show or hide password"
+              aria-label="Toggle password visibility"
+            >
+              👁️ Show
+            </button>
+          </div>
+        </div>
+
+        <!-- Remember Me Checkbox -->
+        <div class="form-check-row">
+          <label class="remember-label" for="rememberMe">
+            <input type="checkbox" id="rememberMe" checked>
+            <span>Remember me</span>
+          </label>
+        </div>
+
+        <!-- Large Primary Button -->
+        <button type="submit" id="loginSubmitBtn" class="btn btn-login-primary">
+          Login
+        </button>
+      </form>
+
+      <!-- Register Link -->
+      <div class="login-footer">
+        Don't have an account? <a href="register.html" class="register-link">Register</a>
+      </div>
+
+      <!-- Back to Catalog Link -->
+      <div class="login-subfooter">
+        <a href="index.html" class="guest-link">← Back to UI Catalog</a>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
